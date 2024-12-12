@@ -1,0 +1,58 @@
+﻿@inherits LayoutComponentBase
+@using MudBlazor
+@using Flink.Components.Layout
+@inject NavigationManager Navigation
+
+<MudThemeProvider IsDarkMode="true" Theme="CustomTheme" />
+<MudPopoverProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<MudLayout Class="mud-layout-root">
+    <MudMainContent Class="pt-0 mt-0">
+        @Body
+    </MudMainContent>
+    <BottomMenu />
+</MudLayout>
+
+@code {
+    MudTheme CustomTheme = new MudTheme()
+        {
+            PaletteDark = new PaletteDark()
+            {
+                TextPrimary = "#F9F4F5",
+                Background = "#03122F",
+                Primary = "#F1916D",
+                Secondary = "#182C53",
+                Tertiary = "#DA9ADA"
+            },
+            Typography = new Typography()
+            {
+                Default = new Default()
+                {
+                    FontFamily = new[] { "Montserrat", "sans-serif" }
+                },
+                Body1 = new Body1()
+                {
+                    FontWeight = 700
+                },
+                Subtitle1 = new Subtitle1()
+                {
+                    FontFamily = new[] { "Widescreen", "sans-serif" },
+                    FontWeight = 900,
+                    FontSize = "1.25rem",
+                    LineHeight = 1.30
+                }
+            }
+        };
+}
+
+<style>
+    .mud-layout-root {
+        display: flex;
+        flex-direction: column;
+        min-height: 90vh;
+        margin: 0;
+        padding: 0;
+    }
+</style>

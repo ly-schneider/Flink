@@ -1,0 +1,67 @@
+﻿@using MudBlazor
+
+@page "/home"
+
+<MudContainer Class="container pt-0 mt-0">
+    <MudImage Src="images/flink.png" Alt="Flink Logo" Width="80" Class="logo" />
+
+    <MudText Class="mt-8" Typo="Typo.subtitle1">Wähle eine(n) Freund:in zum vernetzen</MudText>
+
+    <MudGrid Class="grid">
+        <MudItem Class="grid-item">
+            <MudStack AlignItems="AlignItems.Center" Spacing="1">
+                <MudAvatar Style="width: 75px; height: 75px;">
+                    <MudImage Src="images/max.png"></MudImage>
+                </MudAvatar>
+                <MudText Typo="Typo.body1">Max</MudText>
+            </MudStack>
+        </MudItem>
+        <MudItem Class="grid-item">
+            <MudStack AlignItems="AlignItems.Center" Spacing="1">
+                <MudAvatar Style="width: 75px; height: 75px;">
+                    <MudImage Src="images/lilian.png"></MudImage>
+                </MudAvatar>
+                <MudText Typo="Typo.body1">Lilian</MudText>
+            </MudStack>
+        </MudItem>
+        <MudItem Class="grid-item">
+            <MudStack AlignItems="AlignItems.Center" Spacing="1">
+                <MudAvatar Style="width: 75px; height: 75px;">
+                    <MudImage Src="images/anna.png"></MudImage>
+                </MudAvatar>
+                <MudText Typo="Typo.body1">Anna</MudText>
+            </MudStack>
+        </MudItem>
+    </MudGrid>
+</MudContainer>
+
+<style>
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        padding: 0 2rem;
+    }
+
+    .logo {
+        padding-top: 0;
+        margin-top: 1.5rem;
+    }
+
+    .grid {
+        margin-top: 0rem;
+        padding: 0;
+    }
+
+    .grid-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        margin: 0;
+        width: 33%;
+    }
+</style>

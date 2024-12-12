@@ -1,0 +1,41 @@
+﻿<MudPaper class="bottom-menu">
+    <NavLink href="home" ActiveClass="active">
+        <MudIconButton Icon="@Icons.Material.Outlined.Home" Size="Size.Large" aria-label="Home" class="nav-button" />
+    </NavLink>
+    <NavLink href="counter" ActiveClass="active">
+        <MudIconButton Icon="@Icons.Material.Outlined.Send" Size="Size.Large" aria-label="Chats" class="nav-button" />
+    </NavLink>
+    <NavLink href="weather" ActiveClass="active">
+        <MudIconButton Icon="@Icons.Material.Outlined.Person" Size="Size.Large" aria-label="Profil"
+            class="nav-button" />
+    </NavLink>
+    <NavLink href="help" ActiveClass="active">
+        <MudIconButton Icon="@Icons.Material.Filled.QuestionMark" Size="Size.Large" aria-label="Hilfe"
+            class="nav-button" />
+    </NavLink>
+</MudPaper>
+
+<style>
+    .bottom-menu {
+        margin-top: auto;
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        background-color: transparent;
+        @* padding: 1.5rem 1rem 1.5rem 1rem; *@
+    }
+
+    .nav-button {
+        color: #f9f4f5;
+    }
+
+    .nav-button:hover,
+    .nav-button:active,
+    .nav-button:focus {
+        color: #f9f4f5;
+    }
+
+    .active .nav-button {
+        color: #da9ada;
+    }
+</style>
