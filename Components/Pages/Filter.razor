@@ -1,0 +1,105 @@
+﻿@using MudBlazor
+
+@page "/filter"
+
+<MudContainer Class="container">
+    <MudStack Spacing="2" Class="p-4">
+        <!-- Header -->
+        <MudText Typo="Typo.h1" Class="mb-2">Konfiguriere Filter</MudText>
+
+        <!-- Selected Friend -->
+        <MudText Typo="Typo.subtitle1">Ausgewählt:</MudText>
+        <MudStack Justify="Justify.FlexStart">
+            <MudAvatar Size="Size.Large">
+                <MudImage Src="images/max.png"></MudImage>
+            </MudAvatar>
+            <MudText Typo="Typo.body1">Max</MudText>
+        </MudStack>
+
+        <!-- Description -->
+        <MudText Typo="Typo.body2" Class="text-secondary">
+            Filter helfen dir dabei, eine passende Person für Max zu finden.
+        </MudText>
+
+        <!-- Gender Selection -->
+        <MudText Typo="Typo.subtitle1" Class="mt-4">Geschlecht:</MudText>
+        <MudRadioGroup T="string" Class="mb-2">
+            <MudRadio T="string" Value="@("Mann")">Mann</MudRadio>
+            <MudRadio T="string" Value="@("Frau")">Frau</MudRadio>
+            <MudRadio T="string" Value="@("Divers")">Divers</MudRadio>
+            <MudRadio T="string" Value="@("Egal")">Egal</MudRadio>
+        </MudRadioGroup>
+
+        <!-- Relationship Status -->
+        <MudText Typo="Typo.subtitle1">Beziehungsstatus:</MudText>
+        <MudStack Row="true">
+            <MudCheckBox T="bool" Label="Single" @bind-Value="Checkbox_Single" />
+            <MudCheckBox T="bool" Label="Vergeben" @bind-Value="Checkbox_Vergeben" />
+        </MudStack>
+
+        <!-- Age Range Sliders -->
+        <MudText Typo="Typo.subtitle1" Class="mt-4">Minimales Alter:</MudText>
+        <MudSlider @bind-Value="MinAge" Min="18" Max="100" Step="1" ValueLabel="true" />
+
+        <MudText Typo="Typo.subtitle1" Class="mt-4">Maximales Alter:</MudText>
+        <MudSlider @bind-Value="MaxAge" Min="18" Max="100" Step="1" ValueLabel="true" />
+
+        <!-- Region Dropdown -->
+        <MudText Typo="Typo.subtitle1" Class="mt-4">Wohnregion:</MudText>
+        <MudSelect @bind-Value="SelectedRegion" Variant="Variant.Outlined">
+            <MudSelectItem Value="@("Bern")">Bern</MudSelectItem>
+            <MudSelectItem Value="@("Zürich")">Zürich</MudSelectItem>
+            <MudSelectItem Value="@("Basel")">Basel</MudSelectItem>
+        </MudSelect>
+
+        <!-- Start Search Button -->
+        <MudButton Variant="Variant.Filled" Class="mt-6 start-button">
+            Starte die Suche
+        </MudButton>
+    </MudStack>
+</MudContainer>
+
+@code {
+    public bool Checkbox_Single { get; set; } = false;
+    public bool Checkbox_Vergeben { get; set; } = false;
+    private double MinAge = 18;
+    private double MaxAge = 60;
+    private string SelectedRegion = "Bern";
+}
+
+<style>
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        padding: 0 0rem;
+    }
+
+    .start-button {
+        background: linear-gradient(to right, #F1916D, #DA9ADA);
+        border: none;
+        border-radius: 10px;
+        padding: 12px 24px;
+        cursor: pointer;
+        text-align: center;
+        box-shadow: none;
+        outline: none;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        color: #000;
+        font-family: "Widescreen", "sans-serif";
+        font-weight: 900;
+        font-size: "1.25rem";
+    }
+
+    .start-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .start-button:active {
+        transform: translateY(0);
+        box-shadow: none;
+    }
+</style>
