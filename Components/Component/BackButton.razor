@@ -1,0 +1,24 @@
+@using Microsoft.AspNetCore.Components
+@using MudBlazor
+
+<MudFab Class="back-button mb-2" Color="Color.Secondary" StartIcon="@Icons.Material.Filled.ArrowBack" @onclick="NavigateBack" Size="Size.Small" />
+
+@code {
+    [Parameter]
+    public string? BackHref { get; set; }
+
+    [Inject]
+    private NavigationManager NavigationManager { get; set; } = default!;
+
+    private void NavigateBack()
+    {
+        if (!string.IsNullOrWhiteSpace(BackHref))
+        {
+            NavigationManager.NavigateTo(BackHref);
+        }
+    }
+}
+
+<style>
+    
+</style>

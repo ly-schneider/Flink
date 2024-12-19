@@ -1,70 +1,129 @@
 ﻿@using MudBlazor
+@using Flink.Components.Component
+@using System.ComponentModel.DataAnnotations
 
 @page "/filter"
 
 <MudContainer Class="container">
-    <MudStack Spacing="2" Class="p-4">
-        <!-- Header -->
-        <MudText Typo="Typo.h1" Class="mb-2">Konfiguriere Filter</MudText>
+    <MudForm @ref="Form" @bind-IsValid="IsFormValid" @bind-Errors="errors">
+        <MudStack Spacing="2" Class="p-4">
+            <!-- Back Button -->
+            <BackButton BackHref="/" />
 
-        <!-- Selected Friend -->
-        <MudText Typo="Typo.subtitle1">Ausgewählt:</MudText>
-        <MudStack Justify="Justify.FlexStart">
-            <MudAvatar Size="Size.Large">
-                <MudImage Src="images/max.png"></MudImage>
-            </MudAvatar>
-            <MudText Typo="Typo.body1">Max</MudText>
+            <!-- Header -->
+            <MudText Typo="Typo.h1" Class="mb-2">Konfiguriere Filter</MudText>
+
+            <!-- Selected Friend -->
+            <MudText Typo="Typo.subtitle1">Ausgewählt:</MudText>
+            <MudStack Justify="Justify.FlexStart" AlignItems="AlignItems.Center" Row="true">
+                <MudAvatar Size="Size.Large">
+                    <MudImage Src="images/max.png"></MudImage>
+                </MudAvatar>
+                <MudText Typo="Typo.body1">Max</MudText>
+            </MudStack>
+
+            <!-- Description -->
+            <MudText Typo="Typo.body2" Class="text-secondary mt-3">
+                Filter helfen dir dabei, eine passende Person für Max zu finden.
+            </MudText>
+
+            <!-- Gender Selection -->
+            <MudText Typo="Typo.subtitle1" Class="mt-1">Geschlecht:</MudText>
+            <MudRadioGroup T="string" Class="mb-2" @bind-Value="Gender" Required="true" RequiredError="Bitte wählen Sie ein Geschlecht aus!">
+                <MudRadio T="string" Value="@("Mann")">Mann</MudRadio>
+                <MudRadio T="string" Value="@("Frau")">Frau</MudRadio>
+                <MudRadio T="string" Value="@("Divers")">Divers</MudRadio>
+                <MudRadio T="string" Value="@("Egal")">Egal</MudRadio>
+            </MudRadioGroup>
+
+            <!-- Relationship Status -->
+            <MudText Typo="Typo.subtitle1">Beziehungsstatus:</MudText>
+            <MudStack Row="true">
+                <MudCheckBox T="bool" Label="Single" @bind-Value="Checkbox_Single" @onchange="OnRelationshipChange" />
+                <MudCheckBox T="bool" Label="Vergeben" @bind-Value="Checkbox_Vergeben" @onchange="OnRelationshipChange" />
+            </MudStack>
+            @if (!string.IsNullOrEmpty(RelationshipErrorMessage))
+            {
+                <MudText Color="Color.Error">@RelationshipErrorMessage</MudText>
+            }
+
+            <!-- Age Range Sliders -->
+            <MudText Typo="Typo.subtitle1" Class="mt-4">Minimales Alter:</MudText>
+            <MudSlider @bind-Value="MinAge" Min="18" Max="100" Step="1" ValueLabel="true">Alter: @MinAge.ToString()</MudSlider>
+
+            <MudText Typo="Typo.subtitle1" Class="mt-4">Maximales Alter:</MudText>
+            <MudSlider @bind-Value="MaxAge" Min="@MinAge" Max="100" Step="1" ValueLabel="true">Alter: @MaxAge.ToString()</MudSlider>
+
+            <!-- Region Dropdown -->
+            <MudText Typo="Typo.subtitle1" Class="mt-4">Wohnregion:</MudText>
+            <MudSelect @bind-Value="SelectedRegion" Variant="Variant.Outlined" Required="true" RequiredError="Bitte wählen Sie eine Region aus!">
+                <MudSelectItem Value="@("Bern")">Bern</MudSelectItem>
+                <MudSelectItem Value="@("Zürich")">Zürich</MudSelectItem>
+                <MudSelectItem Value="@("Basel")">Basel</MudSelectItem>
+            </MudSelect>
+
+            <!-- Start Search Button -->
+            <MudButton Variant="Variant.Filled" Class="mt-6 start-button" OnClick="SubmitForm">
+                Starte die Suche
+            </MudButton>
         </MudStack>
-
-        <!-- Description -->
-        <MudText Typo="Typo.body2" Class="text-secondary">
-            Filter helfen dir dabei, eine passende Person für Max zu finden.
-        </MudText>
-
-        <!-- Gender Selection -->
-        <MudText Typo="Typo.subtitle1" Class="mt-4">Geschlecht:</MudText>
-        <MudRadioGroup T="string" Class="mb-2">
-            <MudRadio T="string" Value="@("Mann")">Mann</MudRadio>
-            <MudRadio T="string" Value="@("Frau")">Frau</MudRadio>
-            <MudRadio T="string" Value="@("Divers")">Divers</MudRadio>
-            <MudRadio T="string" Value="@("Egal")">Egal</MudRadio>
-        </MudRadioGroup>
-
-        <!-- Relationship Status -->
-        <MudText Typo="Typo.subtitle1">Beziehungsstatus:</MudText>
-        <MudStack Row="true">
-            <MudCheckBox T="bool" Label="Single" @bind-Value="Checkbox_Single" />
-            <MudCheckBox T="bool" Label="Vergeben" @bind-Value="Checkbox_Vergeben" />
-        </MudStack>
-
-        <!-- Age Range Sliders -->
-        <MudText Typo="Typo.subtitle1" Class="mt-4">Minimales Alter:</MudText>
-        <MudSlider @bind-Value="MinAge" Min="18" Max="100" Step="1" ValueLabel="true" />
-
-        <MudText Typo="Typo.subtitle1" Class="mt-4">Maximales Alter:</MudText>
-        <MudSlider @bind-Value="MaxAge" Min="18" Max="100" Step="1" ValueLabel="true" />
-
-        <!-- Region Dropdown -->
-        <MudText Typo="Typo.subtitle1" Class="mt-4">Wohnregion:</MudText>
-        <MudSelect @bind-Value="SelectedRegion" Variant="Variant.Outlined">
-            <MudSelectItem Value="@("Bern")">Bern</MudSelectItem>
-            <MudSelectItem Value="@("Zürich")">Zürich</MudSelectItem>
-            <MudSelectItem Value="@("Basel")">Basel</MudSelectItem>
-        </MudSelect>
-
-        <!-- Start Search Button -->
-        <MudButton Variant="Variant.Filled" Class="mt-6 start-button">
-            Starte die Suche
-        </MudButton>
-    </MudStack>
+    </MudForm>
 </MudContainer>
 
 @code {
+    private MudForm Form;
+    private bool IsFormValid = false;
+    private string[] errors = {};
+    private bool IsSubmitted = false;
+
     public bool Checkbox_Single { get; set; } = false;
     public bool Checkbox_Vergeben { get; set; } = false;
+    private string RelationshipErrorMessage { get; set; } = string.Empty;
+
     private double MinAge = 18;
     private double MaxAge = 60;
-    private string SelectedRegion = "Bern";
+    private string SelectedRegion = "";
+    private string Gender { get; set; } = "";
+
+    [Inject]
+    private NavigationManager NavigationManager { get; set; } = default!;
+
+    private void OnRelationshipChange(ChangeEventArgs args)
+    {
+        // Clear error if at least one checkbox is selected
+        if (Checkbox_Single || Checkbox_Vergeben)
+        {
+            RelationshipErrorMessage = string.Empty;
+        }
+    }
+
+    private IEnumerable<string> ValidateMaxAge(double value)
+    {
+        if (value <= MinAge)
+            yield return "Das maximale Alter muss größer als das minimale Alter sein.";
+    }
+
+    private async Task SubmitForm()
+    {
+        IsSubmitted = true;
+        await Form.Validate();
+
+        // Check if relationship status is selected
+        if (!Checkbox_Single && !Checkbox_Vergeben)
+        {
+            RelationshipErrorMessage = "Bitte wählen Sie einen Beziehungsstatus aus.";
+        }
+        else
+        {
+            RelationshipErrorMessage = string.Empty;
+        }
+
+        // Proceed only if form is valid and no relationship error
+        if (Form.IsValid && string.IsNullOrEmpty(RelationshipErrorMessage))
+        {
+            NavigationManager.NavigateTo("/match");
+        }
+    }
 }
 
 <style>
@@ -90,7 +149,7 @@
         color: #000;
         font-family: "Widescreen", "sans-serif";
         font-weight: 900;
-        font-size: "1.25rem";
+        font-size: "1.4rem";
     }
 
     .start-button:hover {
