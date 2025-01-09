@@ -1,0 +1,58 @@
+@using MudBlazor
+@using Flink.Components.Component
+
+@page "/faq"
+
+<MudContainer Class="container">
+    <MudStack Spacing="2" Class="p-4">
+        <BackButton BackHref="/help" />
+
+        <MudText Typo="Typo.h3" Class="mb-4 mt-3">FAQ</MudText>
+
+        <MudStack Spacing="4">
+            <MudStack>
+                <MudText Typo="Typo.h2">Was ist Flink?</MudText>
+                <MudText Typo="Typo.body1">
+                    Flink ist eine mobile App von Sparkify, die Nutzern dabei hilft, ihre Freunde mit neuen Kontakten zu vernetzen. 
+                    Nutzer wählen eine Person aus ihrem Netzwerk aus und erhalten passende Freundesvorschläge für diese Person. 
+                    Durch ein einfaches Ja/Nein können sie entscheiden, ob der empfohlene Kontakt geeignet ist.
+                </MudText>
+            </MudStack>
+
+            <MudStack>
+                <MudText Typo="Typo.h2">Wie funktioniert der typische Ablauf in Flink?</MudText>
+                <MudText Typo="Typo.body1">
+                    App öffnen: Nach dem Start der App wählst du einen Freund aus deinem Netzwerk.
+                    Vorschläge erhalten: Flink zeigt dir potenzielle Kontakte an, die auf gemeinsamen Interessen und Aktivitäten basieren.
+                    Kontakte empfehlen: Du entscheidest per Ja/Nein, ob du den Kontakt an deinen Freund weiterempfehlen möchtest. Auf diese Weise erweiterst du dessen Freundeskreis spielerisch und schnell.
+                </MudText>
+            </MudStack>
+
+            <MudStack>
+                <MudText Typo="Typo.h2">Warum sollte ich Flink nutzen?</MudText>
+                <MudText Typo="Typo.body1">
+                    Flink macht das Vernetzen von Freunden einfacher und unterhaltsamer. 
+                    Dank der personalisierten Vorschläge entdeckst du schneller passende Kontakte für deine Freunde und hilfst ihnen dabei, interessante neue Menschen kennenzulernen. 
+                    Gleichzeitig bietet die App durch ihre spielerische Gestaltung ein unterhaltsames Nutzererlebnis.
+                </MudText>
+            </MudStack>
+
+            <MudStack>
+                <MudText Typo="Typo.h2">Für wen ist Flink geeignet?</MudText>
+                <MudText Typo="Typo.body1">
+                    Flink richtet sich an technisch versierte, sozial aktive Personen zwischen 14 und 35 Jahren, die Spaß daran haben, neue Kontakte zu knüpfen und ihre Freunde dabei zu unterstützen. 
+                    Da sie überwiegend mobil genutzt wird, passt Flink besonders gut zu Nutzerinnen und Nutzern, die viel unterwegs sind oder kurze Pausen effektiv ausfüllen möchten.
+                </MudText>
+            </MudStack>
+        </MudStack>
+    </MudStack>
+</MudContainer>
+
+<style>
+    .container {
+        height: 100%;
+        padding: 0;
+        margin: 0 auto;
+        width: 100%;
+    }
+</style>

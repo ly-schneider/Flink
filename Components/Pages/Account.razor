@@ -1,0 +1,89 @@
+@using MudBlazor
+@using System.ComponentModel.DataAnnotations
+
+@page "/account"
+
+<MudContainer Class="container">
+    <MudForm @ref="Form" @bind-IsValid="IsFormValid" @bind-Errors="errors">
+        <MudStack Spacing="2" Class="p-4">
+
+            <MudText Typo="Typo.subtitle1">Name</MudText>
+            <MudTextField T="string" @bind-Value="Name" Variant="Variant.Outlined" Placeholder="Max" 
+                          For="@(() => Model.Name)" Immediate="true" />
+
+            <MudText Typo="Typo.subtitle1" Class="mt-4">Geburtsdatum</MudText>
+            <MudDatePicker @bind-Date="Birthdate" Variant="Variant.Outlined" 
+                           Label="Wählen Sie ein Datum" Required="true" RequiredError="Bitte geben Sie ein Geburtsdatum ein!" 
+                           Validation="@ValidateBirthdate" />
+
+            <MudButton Class="save-button mt-4" OnClick="SaveForm">
+                Speichern
+            </MudButton>
+        </MudStack>
+    </MudForm>
+</MudContainer>
+
+@code {
+    private MudForm Form;
+    private bool IsFormValid = false;
+    private string[] errors = {};
+    private string Name { get; set; } = string.Empty;
+    private DateTime? Birthdate { get; set; }
+
+    private UserInputModel Model = new();
+
+    private void SaveForm()
+    {
+        Form.Validate();
+        if (Form.IsValid)
+        {
+            // Perform save action
+        }
+    }
+
+    private IEnumerable<string> ValidateBirthdate(DateTime? date)
+    {
+        if (!date.HasValue)
+        {
+            yield return "Bitte wählen Sie ein gültiges Datum.";
+        }
+        else if (date.Value >= DateTime.Today)
+        {
+            yield return "Das Geburtsdatum muss in der Vergangenheit liegen.";
+        }
+    }
+
+    public class UserInputModel
+    {
+        [Required(ErrorMessage = "Bitte geben Sie einen Namen ein!")]
+        public string Name { get; set; } = string.Empty;
+    }
+}
+
+<style>
+    .container {
+        height: 100%;
+        padding: 0;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .save-button {
+        background-color: #F1916D;
+        color: black;
+        border-radius: 10px;
+        padding: 12px 24px;
+        font-family: "Widescreen", "sans-serif";
+        font-weight: 900;
+    }
+
+    .save-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .save-button:active {
+        transform: translateY(0);
+        box-shadow: none;
+    }
+</style>

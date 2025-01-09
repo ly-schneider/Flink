@@ -7,13 +7,10 @@
 <MudContainer Class="container">
     <MudForm @ref="Form" @bind-IsValid="IsFormValid" @bind-Errors="errors">
         <MudStack Spacing="2" Class="p-4">
-            <!-- Back Button -->
-            <BackButton BackHref="/" />
+            <BackButton BackHref="/home" />
 
-            <!-- Header -->
-            <MudText Typo="Typo.h1" Class="mb-2">Konfiguriere Filter</MudText>
+            <MudText Typo="Typo.h2" Class="mb-2">Konfiguriere Filter</MudText>
 
-            <!-- Selected Friend -->
             <MudText Typo="Typo.subtitle1">Ausgewählt:</MudText>
             <MudStack Justify="Justify.FlexStart" AlignItems="AlignItems.Center" Row="true">
                 <MudAvatar Size="Size.Large">
@@ -22,12 +19,10 @@
                 <MudText Typo="Typo.body1">Max</MudText>
             </MudStack>
 
-            <!-- Description -->
             <MudText Typo="Typo.body2" Class="text-secondary mt-3">
                 Filter helfen dir dabei, eine passende Person für Max zu finden.
             </MudText>
 
-            <!-- Gender Selection -->
             <MudText Typo="Typo.subtitle1" Class="mt-1">Geschlecht:</MudText>
             <MudRadioGroup T="string" Class="mb-2" @bind-Value="Gender" Required="true" RequiredError="Bitte wählen Sie ein Geschlecht aus!">
                 <MudRadio T="string" Value="@("Mann")">Mann</MudRadio>
@@ -36,7 +31,6 @@
                 <MudRadio T="string" Value="@("Egal")">Egal</MudRadio>
             </MudRadioGroup>
 
-            <!-- Relationship Status -->
             <MudText Typo="Typo.subtitle1">Beziehungsstatus:</MudText>
             <MudStack Row="true">
                 <MudCheckBox T="bool" Label="Single" @bind-Value="Checkbox_Single" @onchange="OnRelationshipChange" />
@@ -47,14 +41,12 @@
                 <MudText Color="Color.Error">@RelationshipErrorMessage</MudText>
             }
 
-            <!-- Age Range Sliders -->
             <MudText Typo="Typo.subtitle1" Class="mt-4">Minimales Alter:</MudText>
             <MudSlider @bind-Value="MinAge" Min="18" Max="100" Step="1" ValueLabel="true">Alter: @MinAge.ToString()</MudSlider>
 
             <MudText Typo="Typo.subtitle1" Class="mt-4">Maximales Alter:</MudText>
             <MudSlider @bind-Value="MaxAge" Min="@MinAge" Max="100" Step="1" ValueLabel="true">Alter: @MaxAge.ToString()</MudSlider>
 
-            <!-- Region Dropdown -->
             <MudText Typo="Typo.subtitle1" Class="mt-4">Wohnregion:</MudText>
             <MudSelect @bind-Value="SelectedRegion" Variant="Variant.Outlined" Required="true" RequiredError="Bitte wählen Sie eine Region aus!">
                 <MudSelectItem Value="@("Bern")">Bern</MudSelectItem>
@@ -62,7 +54,6 @@
                 <MudSelectItem Value="@("Basel")">Basel</MudSelectItem>
             </MudSelect>
 
-            <!-- Start Search Button -->
             <MudButton Variant="Variant.Filled" Class="mt-6 start-button" OnClick="SubmitForm">
                 Starte die Suche
             </MudButton>
@@ -90,7 +81,6 @@
 
     private void OnRelationshipChange(ChangeEventArgs args)
     {
-        // Clear error if at least one checkbox is selected
         if (Checkbox_Single || Checkbox_Vergeben)
         {
             RelationshipErrorMessage = string.Empty;
@@ -108,7 +98,6 @@
         IsSubmitted = true;
         await Form.Validate();
 
-        // Check if relationship status is selected
         if (!Checkbox_Single && !Checkbox_Vergeben)
         {
             RelationshipErrorMessage = "Bitte wählen Sie einen Beziehungsstatus aus.";
@@ -118,10 +107,9 @@
             RelationshipErrorMessage = string.Empty;
         }
 
-        // Proceed only if form is valid and no relationship error
         if (Form.IsValid && string.IsNullOrEmpty(RelationshipErrorMessage))
         {
-            NavigationManager.NavigateTo("/match");
+            NavigationManager.NavigateTo("/profile");
         }
     }
 }

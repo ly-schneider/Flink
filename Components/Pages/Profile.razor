@@ -1,0 +1,141 @@
+@using MudBlazor
+@using Flink.Components.Component
+
+@page "/profile"
+
+<MudContainer Class="container">
+    <div class="background" style="background-image: url('@currentProfile.Image');">
+    </div>
+    <MudStack Spacing="2" Justify="Justify.SpaceBetween" Class="content-overlay pt-6">
+        <BackButton BackHref="/filter" />
+
+        <MudStack Class="text-container">
+            <MudStack Spacing="0" AlignItems="AlignItems.Start" Class="text-overlay">
+                <MudText Typo="Typo.h1">@currentProfile.Name</MudText>
+                <MudText Typo="Typo.subtitle1">@currentProfile.Age, @currentProfile.Location</MudText>
+            </MudStack>
+
+            <MudStack Row="true" Spacing="3" AlignItems="AlignItems.Center" Class="action-buttons">
+                <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="Dislike" Class="action-button">
+                    <MudIcon Icon="@Icons.Material.Filled.Close" />
+                </MudButton>
+                <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="Like" Class="action-button">
+                    <MudIcon Icon="@Icons.Material.Filled.Check" />
+                </MudButton>
+            </MudStack>
+        </MudStack>
+    </MudStack>
+</MudContainer>
+
+@if (showOverlay)
+{
+    <div class="like-overlay">
+        <div class="overlay-text">
+            <MudText Typo="Typo.h3">Du hast ein(e) neue(n) Freund:in hinzugefügt!</MudText>
+        </div>
+    </div>
+}
+
+@code {
+    private class UserProfile
+    {
+        public string Name { get; set; }
+        public int Age { get; set; }
+        public string Location { get; set; }
+        public string Image { get; set; }
+    }
+
+    private List<UserProfile> profiles = new List<UserProfile>
+    {
+        new UserProfile { Name = "Amanda", Age = 19, Location = "Bern", Image = "/images/amanda.png" },
+        new UserProfile { Name = "Amalia", Age = 18, Location = "Zurich", Image = "/images/amalia.png" },
+        new UserProfile { Name = "Simon", Age = 22, Location = "Thurgau", Image = "/images/simon.png" }
+    };
+
+    private int currentIndex = 0;
+    private UserProfile currentProfile => profiles[currentIndex];
+
+    private bool showOverlay = false;
+
+    private async void Like()
+    {
+        showOverlay = true;
+        StateHasChanged();
+
+        await Task.Delay(3000);
+        showOverlay = false;
+        StateHasChanged();
+
+        currentIndex = (currentIndex + 1) % profiles.Count;
+        StateHasChanged();
+    }
+
+    private void Dislike()
+    {
+        currentIndex = (currentIndex + 1) % profiles.Count;
+    }
+}
+
+<style>
+    .container {
+        margin: 0 auto;
+        width: 100%;
+        min-height: 60vh;
+    }
+
+    .background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background-size: cover;
+        background-position: center;
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    .content-overlay {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        min-height: 80vh;
+    }
+
+    .text-container {
+        margin-top: auto;
+    }
+
+    .action-buttons {
+        margin-top: 0.5rem;
+        width: 100%;
+        position: relative;
+        z-index: 10;
+    }
+
+    .action-button {
+        width: 100%;
+        border-radius: 7px;
+        z-index: 99;
+    }
+
+    .like-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+    }
+
+    .overlay-text {
+        color: #fff;
+        font-size: 1.5rem;
+        text-align: center;
+        padding: 1rem;
+    }
+</style>

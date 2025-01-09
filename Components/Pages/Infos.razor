@@ -1,0 +1,31 @@
+@using MudBlazor
+@using Flink.Components.Component
+
+@page "/infos"
+
+<MudContainer Class="container">
+    <MudStack Spacing="2" Class="p-4">
+        <BackButton BackHref="/help" />
+
+        <MudText Typo="Typo.h3" Class="mb-4 mt-3">Infos</MudText>
+
+        <MudText Typo="Typo.h2" Class="mb-2">Impressum</MudText>
+        <MudText Typo="Typo.body1">
+            Levyn Schneider<br />
+            Neumattstrasse 26<br />
+            3127 Mühlethurnen
+        </MudText>
+
+        <MudText Typo="Typo.h2" Class="mt-4">Version</MudText>
+        <MudText Typo="Typo.body1">Version 1.0</MudText>
+    </MudStack>
+</MudContainer>
+
+<style>
+    .container {
+        height: 100%;
+        padding: 0;
+        margin: 0 auto;
+        width: 100%;
+    }
+</style>
